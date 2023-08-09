@@ -5,6 +5,7 @@ const items = require("./fakeDb");
 const itemsRoutes = require("./itemsRoutes");
 
 const { NotFoundError } = require("./expressError");
+const router = require("./itemsRoutes");
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -23,3 +24,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
