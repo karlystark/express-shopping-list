@@ -10,7 +10,8 @@ router.get("/", function (req, res) {
 });
 
 router.post("/", function (req, res) {
-  if (req.body === undefined) throw new BadRequestError("not valid items");
+  if (!req.body["name"] || !req.body["price"])
+    throw new BadRequestError("item name and price required");
 
   const newItem = req.body;
 
@@ -22,7 +23,6 @@ router.post("/", function (req, res) {
 module.exports = router;
 
 router.get("/:name", function (req, res) {
-  // if (req.body === undefined) throw new BadRequestError("not valid items");
   let itemName = req.params.name;
   for (let i = 0; i < db.items.length; i++) {
     if (db.items[i].name === itemName) {
@@ -33,7 +33,7 @@ router.get("/:name", function (req, res) {
 });
 
 router.patch("/:name", function (req, res) {
-  if (req.body === undefined) throw new BadRequestError("not valid items");
+  //if (req.body === undefined) throw new BadRequestError("invalid item");
 
   let itemName = req.params.name;
   for (let i = 0; i < db.items.length; i++) {
@@ -44,11 +44,11 @@ router.patch("/:name", function (req, res) {
     }
 
   }
-  throw new NotFoundError("items are not found to update");
+  throw new NotFoundError("item was not found");
 });
 
 router.delete("/:name", function (req, res) {
-  if (req.body === undefined) throw new BadRequestError("not valid items");
+  //if (req.body === undefined) throw new BadRequestError("invalid item");
 
   let itemName = req.params.name;
 
@@ -61,5 +61,5 @@ router.delete("/:name", function (req, res) {
     }
 
   }
-  throw new NotFoundError("items are not found to delete");
+  throw new NotFoundError("item was not found");
 });
